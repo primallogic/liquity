@@ -36,6 +36,8 @@ contract TroveManager is LiquityBase, Ownable, CheckContract, ITroveManager {
     // A doubly linked list of Troves, sorted by their sorted by their collateral ratios
     ISortedTroves public sortedTroves;
 
+    uint public systemDeploymentTime;
+
     // --- Data structures ---
 
     uint constant public SECONDS_IN_ONE_MINUTE = 60;
@@ -285,6 +287,8 @@ contract TroveManager is LiquityBase, Ownable, CheckContract, ITroveManager {
         emit LQTYStakingAddressChanged(_lqtyStakingAddress);
 
         _renounceOwnership();
+
+        systemDeploymentTime = block.timestamp;
     }
 
     // --- Getters ---
@@ -1498,7 +1502,6 @@ contract TroveManager is LiquityBase, Ownable, CheckContract, ITroveManager {
     }
 
     function _requireAfterBootstrapPeriod() internal view {
-        uint systemDeploymentTime = lqtyToken.getDeploymentStartTime();
         require(block.timestamp >= systemDeploymentTime.add(BOOTSTRAP_PERIOD), "TroveManager: Redemptions are not allowed during bootstrap phase");
     }
 

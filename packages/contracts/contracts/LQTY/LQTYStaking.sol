@@ -114,7 +114,7 @@ contract LQTYStaking is ILQTYStaking, Ownable, CheckContract, BaseMath {
         emit TotalLQTYStakedUpdated(totalLQTYStaked);
 
         // Transfer LQTY from caller to this contract
-        lqtyToken.sendToLQTYStaking(msg.sender, _LQTYamount);
+        lqtyToken.transferFrom(msg.sender, address(this), _LQTYamount);
 
         emit StakeChanged(msg.sender, newStake);
         emit StakingGainsWithdrawn(msg.sender, LUSDGain, ETHGain);

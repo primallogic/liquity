@@ -107,8 +107,8 @@ contract Unipool is LPTokenWrapper, Ownable, CheckContract, IUnipool {
         uniToken = IERC20(_uniTokenAddress);
         lqtyToken = ILQTYToken(_lqtyTokenAddress);
         duration = _duration;
-
-        _notifyRewardAmount(lqtyToken.getLpRewardsEntitlement(), _duration);
+        uint _1_MILLION = 1e24;    // 1e6 * 1e18 = 1e24
+        _notifyRewardAmount(_1_MILLION.mul(4).div(3), _duration);
 
         emit LQTYTokenAddressChanged(_lqtyTokenAddress);
         emit UniTokenAddressChanged(_uniTokenAddress);

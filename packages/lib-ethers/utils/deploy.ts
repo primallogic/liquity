@@ -106,6 +106,24 @@ const deployContracts = async (
     unipool: await deployContract(deployer, getContractFactory, "Unipool", { ...overrides })
   };
 
+  let lqtyToken: string;
+  if (process.env.DEPLOY_MONSTA === 'true') {
+    lqtyToken = "0x8A5d7FCD4c90421d21d30fCC4435948aC3618B2f"
+  } else {
+    lqtyToken = await deployContract(
+      deployer,
+      getContractFactory,
+      "LQTYToken",
+      addresses.communityIssuance,
+      addresses.lqtyStaking,
+      addresses.lockupContractFactory,
+      Wallet.createRandom().address, // _bountyAddress (TODO: parameterize this)
+      addresses.unipool, // _lpRewardsAddress
+      Wallet.createRandom().address, // _multisigAddress (TODO: parameterize this)
+      { ...overrides }
+    )
+  }
+  
   return [
     {
       ...addresses,
@@ -119,19 +137,7 @@ const deployContracts = async (
         { ...overrides }
       ),
 
-      lqtyToken: await deployContract(
-        deployer,
-        getContractFactory,
-        "LQTYToken",
-        addresses.communityIssuance,
-        addresses.lqtyStaking,
-        addresses.lockupContractFactory,
-        Wallet.createRandom().address, // _bountyAddress (TODO: parameterize this)
-        addresses.unipool, // _lpRewardsAddress
-        Wallet.createRandom().address, // _multisigAddress (TODO: parameterize this)
-        { ...overrides }
-      ),
-
+      lqtyToken,
       multiTroveGetter: await deployContract(
         deployer,
         getContractFactory,
@@ -359,14 +365,15 @@ export const deployAndSetupContracts = async (
   log("Connecting contracts...");
   await connectContracts(contracts, deployer, overrides);
 
-  const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
+  // const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
   const totalStabilityPoolLQTYReward = await contracts.communityIssuance.LQTYSupplyCap();
   const liquidityMiningLQTYRewardRate = await contracts.unipool.rewardRate();
 
   return {
     ...deployment,
-    deploymentDate: lqtyTokenDeploymentTime.toNumber() * 1000,
+    // deploymentDate: lqtyTokenDeploymentTime.toNumber() * 1000,
+    deploymentDate: 1000,
     bootstrapPeriod: bootstrapPeriod.toNumber(),
     totalStabilityPoolLQTYReward: `${Decimal.fromBigNumberString(
       totalStabilityPoolLQTYReward.toHexString()

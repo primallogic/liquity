@@ -12,6 +12,7 @@ import {
 } from "../src/contracts";
 
 import { createUniswapV2Pair } from "./UniswapV2Factory";
+import { LQTYToken } from "../types";
 
 let silent = true;
 
@@ -58,6 +59,7 @@ const deployContracts = async (
   priceFeedIsTestnet = true,
   overrides?: Overrides
 ): Promise<[addresses: Omit<_LiquityContractAddresses, "uniToken">, startBlock: number]> => {
+
   const [activePoolAddress, startBlock] = await deployContractAndGetBlockNumber(
     deployer,
     getContractFactory,
@@ -105,10 +107,18 @@ const deployContracts = async (
     }),
     unipool: await deployContract(deployer, getContractFactory, "Unipool", { ...overrides })
   };
-
+  
   let lqtyToken: string;
   if (process.env.DEPLOY_MONSTA === 'true') {
-    lqtyToken = "0x8A5d7FCD4c90421d21d30fCC4435948aC3618B2f"
+    const LP_ENDOWMENT = "500000000000000000000"
+    const COMMUNITY_ENDOWMENT = "520000000000000000000"
+    lqtyToken = "0x8A5d7FCD4c90421d21d30fCC4435948aC3618B2f";
+    const factory = await getContractFactory("LQTYToken", deployer);
+    const lqtyTokenContract = factory.attach(lqtyToken)
+    const tx = await (await lqtyTokenContract.transfer(addresses.unipool, LP_ENDOWMENT)).wait()
+    console.log(tx)
+    const tx2 = await (await lqtyTokenContract.transfer(addresses.communityIssuance, COMMUNITY_ENDOWMENT)).wait()
+    console.log(tx2)
   } else {
     lqtyToken = await deployContract(
       deployer,

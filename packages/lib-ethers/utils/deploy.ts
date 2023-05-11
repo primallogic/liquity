@@ -110,13 +110,10 @@ const deployContracts = async (
   
   let lqtyToken: string;
   if (process.env.DEPLOY_MONSTA === 'true') {
-    const LP_ENDOWMENT = "500000000000000000000"
-    const COMMUNITY_ENDOWMENT = "520000000000000000000"
+    const COMMUNITY_ENDOWMENT = "100000000000000000000"
     lqtyToken = "0x8A5d7FCD4c90421d21d30fCC4435948aC3618B2f";
     const factory = await getContractFactory("LQTYToken", deployer);
     const lqtyTokenContract = factory.attach(lqtyToken)
-    const tx = await (await lqtyTokenContract.transfer(addresses.unipool, LP_ENDOWMENT)).wait()
-    console.log(tx)
     const tx2 = await (await lqtyTokenContract.transfer(addresses.communityIssuance, COMMUNITY_ENDOWMENT)).wait()
     console.log(tx2)
   } else {
@@ -189,7 +186,7 @@ const connectContracts = async (
     gasPool,
     unipool,
     uniToken
-  }: _LiquityContracts,
+  }: any,
   deployer: Signer,
   overrides?: Overrides
 ) => {
@@ -198,7 +195,6 @@ const connectContracts = async (
   }
 
   const txCount = await deployer.provider.getTransactionCount(deployer.getAddress());
-
   const connections: ((nonce: number) => Promise<ContractTransaction>)[] = [
     nonce =>
       sortedTroves.setParams(1e6, troveManager.address, borrowerOperations.address, {
@@ -288,11 +284,11 @@ const connectContracts = async (
         { ...overrides, nonce }
       ),
 
-    nonce =>
-      lockupContractFactory.setLQTYTokenAddress(lqtyToken.address, {
-        ...overrides,
-        nonce
-      }),
+    // nonce =>
+    //   lockupContractFactory.setLQTYTokenAddress(lqtyToken.address, {
+    //     ...overrides,
+    //     nonce
+    //   }),
 
     nonce =>
       communityIssuance.setAddresses(lqtyToken.address, stabilityPool.address, {
@@ -300,11 +296,11 @@ const connectContracts = async (
         nonce
       }),
 
-    nonce =>
-      unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
-        ...overrides,
-        nonce
-      })
+    // nonce =>
+    //   unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
+    //     ...overrides,
+    //     nonce
+    //   })
   ];
 
   const txs = await Promise.all(connections.map((connect, i) => connect(txCount + i)));
@@ -378,7 +374,7 @@ export const deployAndSetupContracts = async (
   // const lqtyTokenDeploymentTime = await contracts.lqtyToken.getDeploymentStartTime();
   const bootstrapPeriod = await contracts.troveManager.BOOTSTRAP_PERIOD();
   const totalStabilityPoolLQTYReward = await contracts.communityIssuance.LQTYSupplyCap();
-  const liquidityMiningLQTYRewardRate = await contracts.unipool.rewardRate();
+  // const liquidityMiningLQTYRewardRate = await contracts.unipool.rewardRate();
 
   return {
     ...deployment,
@@ -388,8 +384,8 @@ export const deployAndSetupContracts = async (
     totalStabilityPoolLQTYReward: `${Decimal.fromBigNumberString(
       totalStabilityPoolLQTYReward.toHexString()
     )}`,
-    liquidityMiningLQTYRewardRate: `${Decimal.fromBigNumberString(
-      liquidityMiningLQTYRewardRate.toHexString()
+    liquidityMiningLQTYRewardRate: `${Decimal.fromBigNumberString("1000000000000000000000000"
+      // liquidityMiningLQTYRewardRate.toHexString()
     )}`
   };
 };

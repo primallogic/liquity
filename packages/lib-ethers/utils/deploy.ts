@@ -107,13 +107,13 @@ const deployContracts = async (
     }),
     unipool: await deployContract(deployer, getContractFactory, "Unipool", { ...overrides })
   };
-  
   let lqtyToken: string;
-  if (process.env.DEPLOY_MONSTA === 'true') {
+  if (process.env.DEPLOY_MONSTA === 'true' && await deployer.getChainId() === 56) {
     const COMMUNITY_ENDOWMENT = "100000000000000000000"
     lqtyToken = "0x8A5d7FCD4c90421d21d30fCC4435948aC3618B2f";
     const factory = await getContractFactory("LQTYToken", deployer);
     const lqtyTokenContract = factory.attach(lqtyToken)
+    await (await lqtyTokenContract.transfer(addresses.unipool, COMMUNITY_ENDOWMENT)).wait()
     const tx2 = await (await lqtyTokenContract.transfer(addresses.communityIssuance, COMMUNITY_ENDOWMENT)).wait()
     console.log(tx2)
   } else {
@@ -284,11 +284,11 @@ const connectContracts = async (
         { ...overrides, nonce }
       ),
 
-    // nonce =>
-    //   lockupContractFactory.setLQTYTokenAddress(lqtyToken.address, {
-    //     ...overrides,
-    //     nonce
-    //   }),
+    nonce =>
+      lockupContractFactory.setLQTYTokenAddress(lqtyToken.address, {
+        ...overrides,
+        nonce
+      }),
 
     nonce =>
       communityIssuance.setAddresses(lqtyToken.address, stabilityPool.address, {
@@ -296,11 +296,11 @@ const connectContracts = async (
         nonce
       }),
 
-    // nonce =>
-    //   unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
-    //     ...overrides,
-    //     nonce
-    //   })
+    nonce =>
+      unipool.setParams(lqtyToken.address, uniToken.address, 2 * 30 * 24 * 60 * 60, {
+        ...overrides,
+        nonce
+      })
   ];
 
   const txs = await Promise.all(connections.map((connect, i) => connect(txCount + i)));

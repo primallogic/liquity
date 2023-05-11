@@ -134,7 +134,7 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
   return (
     <>
       <Heading as="h2" sx={{ pt: 1, pb: 3, px: 2 }}>
-        <Flex sx={{ justifyContent: "center" }}>Bond LUSD</Flex>
+        <Flex sx={{ justifyContent: "center" }}>Bond MUSD</Flex>
         <Close
           onClick={handleDismiss}
           sx={{
@@ -171,10 +171,10 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
               date: new Date(dateWithoutHours(Date.now())),
               label: (
                 <>
-                  <Label subLabel="0 bLUSD" description={l.BOND_CREATED.description}>
+                  <Label subLabel="0 bMUSD" description={l.BOND_CREATED.description}>
                     {l.BOND_CREATED.term}
                   </Label>
-                  <SubLabel>0 bLUSD</SubLabel>
+                  <SubLabel>0 bMUSD</SubLabel>
                 </>
               ),
               isEndOfLife: true
@@ -186,7 +186,7 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
                   <Label description={l.BREAK_EVEN_TIME.description}>{l.BREAK_EVEN_TIME.term}</Label>
                   <SubLabel>
                     <InfiniteEstimate estimate={breakEvenAccrual}>
-                      {breakEvenAccrual.prettify(2)} bLUSD
+                      {breakEvenAccrual.prettify(2)} bMUSD
                     </InfiniteEstimate>
                   </SubLabel>
                 </>
@@ -201,7 +201,7 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
                   </Label>
                   <SubLabel>
                     <InfiniteEstimate estimate={rebondAccrual}>
-                      {rebondAccrual.prettify(2)} bLUSD
+                      {rebondAccrual.prettify(2)} bMUSD
                     </InfiniteEstimate>
                   </SubLabel>
                 </>
@@ -215,7 +215,7 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
         label={l.BOND_DEPOSIT.term}
         inputId="bond-deposit-amount"
         amount={deposit.prettify(2)}
-        unit="LUSD"
+        unit="MUSD"
         editingState={depositEditingState}
         editedAmount={deposit.toString()}
         setEditedAmount={amount => handleDepositAmountChanged(Decimal.from(amount))}
@@ -227,7 +227,7 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
         <Record
           lexicon={l.REBOND_RETURN}
           value={hasMarketPremium ? rebondReturn.toFixed(2) : "N/A"}
-          type="LUSD"
+          type="MUSD"
         />
 
         <Record
@@ -249,12 +249,12 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
 
       <HorizontalSlider
         name={"Simulate market price"}
-        description={`The market price of bLUSD impacts how long it will take to rebond and break even. The actual times may be overestimated as the simulator is based on the current bLUSD accrual rate, not taking into account potential rate adjustments.`}
+        description={`The market price of bMUSD impacts how long it will take to rebond and break even. The actual times may be overestimated as the simulator is based on the current bMUSD accrual rate, not taking into account potential rate adjustments.`}
         descriptionLink="https://docs.chickenbonds.org/faq/economic-design#_44lrt4qpho3a"
         value={simulatedProtocolInfo.simulatedMarketPrice}
         min={marketPriceMin}
         max={marketPriceMax}
-        type="LUSD"
+        type="MUSD"
         onSliderChange={value => setSimulatedMarketPrice(value)}
         onReset={() => resetSimulatedMarketPrice()}
       />
@@ -263,21 +263,21 @@ export const Details: React.FC<DetailsProps> = ({ onBack }) => {
 
       {!protocolInfo.hasMarketPremium && (
         <Warning>
-          When the bLUSD market price is less than 3% above the floor price, it's not profitable to
-          bond. Buying bLUSD from the market currently generates a higher return than bonding.{" "}
+          When the bMUSD market price is less than 3% above the floor price, it's not profitable to
+          bond. Buying bMUSD from the market currently generates a higher return than bonding.{" "}
           <LearnMoreLink link={l.INFINITE_ESTIMATION.link} />
         </Warning>
       )}
 
-      {!isDepositEnough && <ErrorDescription>The minimum bond amount is 100 LUSD.</ErrorDescription>}
+      {!isDepositEnough && <ErrorDescription>The minimum bond amount is 100 MUSD.</ErrorDescription>}
       {doesDepositExceedBalance && (
         <ErrorDescription>
-          Amount exceeds your balance by <Amount>{deposit.sub(lusdBalance).prettify(2)} LUSD</Amount>
+          Amount exceeds your balance by <Amount>{deposit.sub(lusdBalance).prettify(2)} MUSD</Amount>
         </ErrorDescription>
       )}
 
       <Flex pb={2} sx={{ fontSize: "15.5px", justifyContent: "center", fontStyle: "italic" }}>
-        You can cancel your bond at any time to recover your deposited LUSD
+        You can cancel your bond at any time to recover your deposited MUSD
       </Flex>
 
       <Flex variant="layout.actions">

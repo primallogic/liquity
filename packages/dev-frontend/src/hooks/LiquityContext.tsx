@@ -31,11 +31,11 @@ type LiquityProviderProps = {
 };
 
 const wsParams = (network: string, infuraApiKey: string): [string, string] => [
-  `wss://${network === "homestead" ? "mainnet" : network}.infura.io/ws/v3/${infuraApiKey}`,
+  `wss://bsc-mainnet.blastapi.io/${infuraApiKey}`,
   network
 ];
 
-const webSocketSupportedNetworks = ["homestead", "kovan", "rinkeby", "ropsten", "goerli"];
+const webSocketSupportedNetworks = ["homestead", "kovan", "rinkeby", "ropsten", "goerli", "bnb"];
 
 export const LiquityProvider: React.FC<LiquityProviderProps> = ({
   children,

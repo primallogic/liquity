@@ -32,13 +32,13 @@ export const BondStats: React.FC<BondStatsProps> = () => {
 
   return (
     <Card variant="info">
-      <Heading sx={{ fontweight: "bold" }}>LUSD bonds</Heading>
+      <Heading sx={{ fontweight: "bold" }}>MUSD bonds</Heading>
 
       <Heading as="h2" sx={{ mt: 3, fontWeight: "body" }}>
-        bLUSD
+        bMUSD
       </Heading>
       <Statistic lexicon={l.BLUSD_MARKET_PRICE}>
-        <Metric value={protocolInfo.marketPrice.prettify(3)} unit="LUSD" />
+        <Metric value={protocolInfo.marketPrice.prettify(3)} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.BLUSD_FAIR_PRICE}>
         <Metric
@@ -53,10 +53,10 @@ export const BondStats: React.FC<BondStatsProps> = () => {
         />
       </Statistic>
       <Statistic lexicon={l.BLUSD_FLOOR_PRICE}>
-        <Metric value={protocolInfo.floorPriceWithoutPendingHarvests.prettify(4)} unit="LUSD" />
+        <Metric value={protocolInfo.floorPriceWithoutPendingHarvests.prettify(4)} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.BLUSD_WIND_DOWN_PRICE}>
-        <Metric value={protocolInfo.windDownPrice.prettify(4)} unit="LUSD" />
+        <Metric value={protocolInfo.windDownPrice.prettify(4)} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.BLUSD_APR}>
         <Metric
@@ -87,7 +87,7 @@ export const BondStats: React.FC<BondStatsProps> = () => {
         />
       </Statistic>
       <Statistic lexicon={l.BLUSD_SUPPLY}>
-        <Metric value={protocolInfo.bLusdSupply.shorten()} unit="bLUSD" />
+        <Metric value={protocolInfo.bLusdSupply.shorten()} unit="bMUSD" />
       </Statistic>
 
       <Heading as="h2" sx={{ mt: 3, fontWeight: "body" }}>
@@ -110,16 +110,16 @@ export const BondStats: React.FC<BondStatsProps> = () => {
         Treasury
       </Heading>
       <Statistic lexicon={l.TREASURY_PENDING}>
-        <Metric value={protocolInfo.treasury.pending.shorten()} unit="LUSD" />
+        <Metric value={protocolInfo.treasury.pending.shorten()} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.TREASURY_ACQUIRED}>
-        <Metric value={protocolInfo.treasury.reserve.shorten()} unit="LUSD" />
+        <Metric value={protocolInfo.treasury.reserve.shorten()} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.TREASURY_PERMANENT}>
-        <Metric value={protocolInfo.treasury.permanent.shorten()} unit="LUSD" />
+        <Metric value={protocolInfo.treasury.permanent.shorten()} unit="MUSD" />
       </Statistic>
       <Statistic lexicon={l.TREASURY_TOTAL}>
-        <Metric value={protocolInfo.treasury.total.shorten()} unit="LUSD" />
+        <Metric value={protocolInfo.treasury.total.shorten()} unit="MUSD" />
       </Statistic>
 
       <Flex mt={3}>

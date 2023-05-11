@@ -177,7 +177,7 @@ export const Opening: React.FC = () => {
                   {isDirty && (
                     <>
                       You will need to repay {totalDebt.sub(LUSD_LIQUIDATION_RESERVE).prettify(2)}{" "}
-                      LUSD to reclaim your collateral ({LUSD_LIQUIDATION_RESERVE.toString()} LUSD
+                      MUSD to reclaim your collateral ({LUSD_LIQUIDATION_RESERVE.toString()} MUSD
                       Liquidation Reserve excluded).
                     </>
                   )}

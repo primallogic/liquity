@@ -64,5 +64,5 @@ export const TROVES: Lexicon = {
 
 export const LUSD_SUPPLY: Lexicon = {
   term: "MUSD supply",
-  description: "The total MUSD minted by the Liquity Protocol."
+  description: "The total MUSD minted by the MUSD Protocol."
 };

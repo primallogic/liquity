@@ -85,6 +85,10 @@ const oracleAddresses = {
   bscmainnet: {
     chainlink: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee",
     tellor: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee"
+  },
+  dev: {
+    chainlink: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee",
+    tellor: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee"
   }
 };
 
@@ -97,7 +101,8 @@ const wethAddresses = {
   rinkeby: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
   goerli: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
   kovan: "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-  bscmainnet: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+  bscmainnet: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+  dev: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
 };
 
 const hasWETH = (network: string): network is keyof typeof wethAddresses => network in wethAddresses;

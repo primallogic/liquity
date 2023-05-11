@@ -1,15 +1,14 @@
 import { HardhatUserConfig } from "hardhat/config";
 
 const alchemyApiKey = process.env.ALCHEMY_API_KEY;
-
+const deployerAccount = process.env.DEPLOYER_PRIVATE_KEY || ""
 const config: HardhatUserConfig = {
   solidity: "0.7.3",
   networks: {
     hardhat: {
-      chainId: 1,
+      chainId: 56,
       forking: {
-        url: `https://eth-mainnet.g.alchemy.com/v2/${alchemyApiKey}`,
-        blockNumber: 16233419
+        url: "https://bsc-dataseed.binance.org/"
       },
       accounts: [
         {

@@ -43,12 +43,12 @@ export const Yield: React.FC = () => {
 
   return (
     <Badge>
-      <Text>LQTY APR {aprPercentage.toString(2)}%</Text>
+      <Text>MONSTA APR {aprPercentage.toString(2)}%</Text>
       <InfoIcon
         tooltip={
           <Card variant="tooltip" sx={{ width: ["220px", "518px"] }}>
             <Paragraph>
-              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the LQTY return on the LUSD
+              An <Text sx={{ fontWeight: "bold" }}>estimate</Text> of the MONSTA return on the LUSD
               deposited to the Stability Pool over the next year, not including your BNB gains from
               liquidations.
             </Paragraph>

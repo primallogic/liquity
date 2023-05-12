@@ -14,12 +14,15 @@ import {
 } from "@liquity/lib-ethers";
 
 import { LiquityFrontendConfig, getConfig } from "../config";
+import { BigNumber, Contract } from "ethers";
+import { formatEther, parseEther } from "ethers/lib/utils";
 
 type LiquityContextValue = {
   config: LiquityFrontendConfig;
   account: string;
   provider: Provider;
   liquity: EthersLiquityWithStore<BlockPolledLiquityStore>;
+  getApproval: (amount: string) => Promise<boolean>
 };
 
 const LiquityContext = createContext<LiquityContextValue | undefined>(undefined);
@@ -102,11 +105,37 @@ export const LiquityProvider: React.FC<LiquityProviderProps> = ({
     return unsupportedNetworkFallback ? <>{unsupportedNetworkFallback(chainId)}</> : null;
   }
 
+  const getApproval = async (amount: string) => {
+    const stakingAddress = connection.addresses["lqtyStaking"]
+    const lqtyAddress = connection.addresses["lqtyToken"]
+    console.log(stakingAddress, lqtyAddress)
+    const contract = new Contract(
+      lqtyAddress, 
+      [
+        "function approve(address _spender, uint256 _value) public returns (bool success)",
+        "function allowance(address _owner, address _spender) public view returns (uint256 remaining)"
+      ],
+      provider.getSigner(account)
+    )
+    const currentAllowance = BigNumber.from((await contract.allowance(account, stakingAddress)).toString())
+    console.log(formatEther(currentAllowance), formatEther(amount))
+    if (currentAllowance.lt(amount)) {
+      try {
+        const tx = await (await contract.approve(stakingAddress, amount)).wait()
+      } catch (e) {
+        console.error(e)
+        return false
+      }
+      return true
+    }
+    return true
+  }
+
   const liquity = EthersLiquity._from(connection);
   liquity.store.logging = true;
 
   return (
-    <LiquityContext.Provider value={{ config, account, provider, liquity }}>
+    <LiquityContext.Provider value={{ config, account, provider, liquity, getApproval }}>
       {children}
     </LiquityContext.Provider>
   );

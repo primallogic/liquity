@@ -22,9 +22,17 @@ import { ErrorDescription } from "../ErrorDescription";
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,
   editedLQTY: lqtyStake.stakedLQTY
+  rawLQTY: lqtyStake.stakedLQTY // new field
 });
 
-type StakeManagerState = ReturnType<typeof init>;
+// type StakeManagerState = ReturnType<typeof init>;
+
+type StakeManagerState = {
+  originalStake: LQTYStake;
+  editedLQTY: Decimal;
+  rawLQTY: Decimal; // new field
+};
+
 type StakeManagerAction =
   | LiquityStoreUpdate
   | { type: "revert" }
@@ -37,10 +45,15 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
   const { originalStake, editedLQTY } = state;
 
   switch (action.type) {
-    case "setStake":
+    // case "setStake":
       // updated code here
       // return { ...state, editedLQTY: Decimal.from(action.newValue) };
-      return { ...state, rawLQTY: Decimal.from(action.newValue), editedLQTY: Decimal.from(action.displayValue) };
+      // return { ...state, rawLQTY: Decimal.from(action.newValue), editedLQTY: Decimal.from(action.displayValue) };
+
+    case "setStake":
+      const rawLQTY = Decimal.from(action.newValue);
+      const editedLQTY = rawLQTY.mul(0.95); // take 5% off
+      return { ...state, rawLQTY, editedLQTY };
 
     case "revert":
       return { ...state, editedLQTY: originalStake.stakedLQTY };

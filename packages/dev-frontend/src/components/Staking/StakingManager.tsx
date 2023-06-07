@@ -21,9 +21,7 @@ import { ErrorDescription } from "../ErrorDescription";
 
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,
-  // editedLQTY: lqtyStake.stakedLQTY
-  //reduce amount by 5%
-  editedLQTY: lqtyStake.stakedLQTY.mul(0.95) // reduce by 5%
+  editedLQTY: lqtyStake.stakedLQTY
 });
 
 type StakeManagerState = ReturnType<typeof init>;
@@ -79,9 +77,20 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
   const lusdGain = originalStake.lusdGain.nonZero?.prettify().concat(" ", COIN);
 
   if (originalStake.isEmpty && stakeLQTY) {
+  //   return (
+  //     <ActionDescription>
+  //       You are staking <Amount>{stakeLQTY}</Amount>.
+  //     </ActionDescription>
+  //   );
+  // }
+
+  const fee = change.stakeLQTY.mul(0.05); // calculate the 5% fee
+    const netStake = change.stakeLQTY.sub(fee); // calculate the net stake after fee deduction
+
     return (
       <ActionDescription>
-        You are staking <Amount>{stakeLQTY}</Amount>.
+        You are staking <Amount>{stakeLQTY}</Amount>. A fee of <Amount>{fee}</Amount> will be charged, 
+        leaving <Amount>{netStake}</Amount> staked.
       </ActionDescription>
     );
   }

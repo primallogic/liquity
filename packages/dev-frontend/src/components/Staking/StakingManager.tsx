@@ -21,7 +21,9 @@ import { ErrorDescription } from "../ErrorDescription";
 
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,
-  editedLQTY: lqtyStake.stakedLQTY
+  // editedLQTY: lqtyStake.stakedLQTY
+  //reduce amount by 5%
+  editedLQTY: lqtyStake.stakedLQTY.mul(0.95) // reduce by 5%
 });
 
 type StakeManagerState = ReturnType<typeof init>;

@@ -36,7 +36,8 @@ type StakeManagerState = {
 type StakeManagerAction =
   | LiquityStoreUpdate
   | { type: "revert" }
-  | { type: "setStake"; newValue: Decimalish };
+  | { type: "setStake"; newValue: Decimalish; displayValue: Decimalish };
+  // | { type: "setStake"; newValue: Decimalish };
 
 const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeManagerState => {
   // console.log(state);
@@ -52,7 +53,7 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
 
     case "setStake":
       const rawLQTY = Decimal.from(action.newValue);
-      const editedLQTY = rawLQTY.mul(0.95); // take 5% off
+      const editedLQTY = Decimal.from(action.displayValue);
       return { ...state, rawLQTY, editedLQTY };
 
     case "revert":

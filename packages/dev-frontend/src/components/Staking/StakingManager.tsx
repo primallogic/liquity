@@ -38,7 +38,9 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
 
   switch (action.type) {
     case "setStake":
-      return { ...state, editedLQTY: Decimal.from(action.newValue) };
+      // updated code here
+      // return { ...state, editedLQTY: Decimal.from(action.newValue) };
+      return { ...state, rawLQTY: Decimal.from(action.newValue), editedLQTY: Decimal.from(action.displayValue) };
 
     case "revert":
       return { ...state, editedLQTY: originalStake.stakedLQTY };

@@ -21,7 +21,7 @@ import { ErrorDescription } from "../ErrorDescription";
 
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,
-  editedLQTY: lqtyStake.stakedLQTY
+  editedLQTY: lqtyStake.stakedLQTY,
   rawLQTY: lqtyStake.stakedLQTY // new field
 });
 

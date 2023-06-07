@@ -178,8 +178,7 @@ export const StaticRow: React.FC<StaticRowProps> = ({
     sx={{ mt: [-2, -3], pb: [2, 3] }}
   >
     {amount ? (
-      // <StaticAmounts amount={amount} {...props}>
-      <StaticAmounts amount='10' {...props}>
+      <StaticAmounts amount={amount} {...props}>
         {children}
       </StaticAmounts>
     ) : (
@@ -250,6 +249,17 @@ export const EditableRow: React.FC<EditableRowProps> = ({
 }) => {
   const [editing, setEditing] = editingState;
   const [invalid, setInvalid] = useState(false);
+
+//new code here
+  const reduceByFivePercent = () => {
+    const numAmount = Number(amount);
+    const reducedAmount = numAmount * 0.95;
+    setEditedAmount(reducedAmount.toString());
+  };
+
+
+
+
 
   return editing === inputId ? (
     <Row {...{ label, labelFor: inputId, unit }}>

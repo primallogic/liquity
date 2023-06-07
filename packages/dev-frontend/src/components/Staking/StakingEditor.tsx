@@ -72,7 +72,13 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
           unit={GT}
           {...{ editingState }}
           editedAmount={editedLQTY.toString(2)}
-          setEditedAmount={newValue => dispatch({ type: "setStake", newValue })}
+          // setEditedAmount={newValue => dispatch({ type: "setStake", newValue })}
+          // edited code update here
+          edited content here
+          setEditedAmount={newValue => {
+            const reducedValue = Decimal.from(newValue).mul(0.95);
+            dispatch({ type: "setStake", newValue: reducedValue.toString() });
+          }}
         />
 
         {newPoolShare.infinite ? (

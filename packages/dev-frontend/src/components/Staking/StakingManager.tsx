@@ -76,24 +76,18 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
   const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" BNB");
   const lusdGain = originalStake.lusdGain.nonZero?.prettify().concat(" ", COIN);
 
-
-  const fee = change.stakeLQTY.mul(0.05); // calculate the 5% fee
-  const netStake = change.stakeLQTY.sub(fee); // calculate the net stake after fee deduction
-
   if (originalStake.isEmpty && stakeLQTY) {
-  //   return (
-  //     <ActionDescription>
-  //       You are staking <Amount>{stakeLQTY}</Amount>.
-  //     </ActionDescription>
-  //   );
-  // }
+    const fee = change.stakeLQTY.mul(0.05); // calculate the 5% fee
+    // return (
+    //   <ActionDescription>
+    //     You are staking <Amount>{stakeLQTY}</Amount>.
+    //   </ActionDescription>
+    // );
 
-    
 
     return (
       <ActionDescription>
-        You are staking <Amount>{stakeLQTY}</Amount>. A fee of <Amount>{fee}</Amount> will be charged, 
-        leaving <Amount>{netStake}</Amount> staked.
+        You are staking <Amount>{stakeLQTY} {fee}</Amount>.
       </ActionDescription>
     );
   }

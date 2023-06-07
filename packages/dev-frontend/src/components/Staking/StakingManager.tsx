@@ -71,24 +71,16 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
   originalStake,
   change
 }) => {
-  const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
+  // const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
+  const stakeLQTY = change.stakeLQTY.mul(0.05)?.prettify().concat(" ", GT);
   const unstakeLQTY = change.unstakeLQTY?.prettify().concat(" ", GT);
   const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" BNB");
   const lusdGain = originalStake.lusdGain.nonZero?.prettify().concat(" ", COIN);
-  const fee = change.stakeLQTY.mul(0.05)?.prettify(); // calculate the 5% fee
 
   if (originalStake.isEmpty && stakeLQTY) {
-    
-    // return (
-    //   <ActionDescription>
-    //     You are staking <Amount>{stakeLQTY}</Amount>.
-    //   </ActionDescription>
-    // );
-
-
     return (
       <ActionDescription>
-        You are staking <Amount>{stakeLQTY} {fee}</Amount>.
+        You are staking <Amount>{stakeLQTY}</Amount>.
       </ActionDescription>
     );
   }

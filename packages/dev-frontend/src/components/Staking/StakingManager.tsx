@@ -84,7 +84,7 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
   //   );
   // }
 
-  const fee = change.stakeLQTY.mul(0.05); // calculate the 5% fee
+    const fee = change.stakeLQTY.mul(0.05); // calculate the 5% fee
     const netStake = change.stakeLQTY.sub(fee); // calculate the net stake after fee deduction
 
     return (

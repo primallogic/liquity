@@ -75,10 +75,19 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
           // setEditedAmount={newValue => dispatch({ type: "setStake", newValue })}
           // edited code update here
           
-          setEditedAmount={newValue => {
-            const reducedValue = Decimal.from(newValue).mul(0.95);
-            dispatch({ type: "setStake", newValue: reducedValue.toString() });
+          // setEditedAmount={newValue => {
+          //   const reducedValue = Decimal.from(newValue).mul(0.95);
+          //   dispatch({ type: "setStake", newValue: reducedValue.toString() });
+          // }}
+
+          setEditedAmount={rawValue => {
+            // Calculate the post-fee value
+            const postFeeValue = Decimal.from(rawValue).mul(0.95).toString(2);
+            
+            // Store both the raw value and the post-fee value
+            dispatch({ type: "setStake", newValue: rawValue, displayValue: postFeeValue });
           }}
+          
         />
 
         {newPoolShare.infinite ? (

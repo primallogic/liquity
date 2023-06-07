@@ -71,8 +71,7 @@ const StakingManagerActionDescription: React.FC<StakingManagerActionDescriptionP
   originalStake,
   change
 }) => {
-  // const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
-  const stakeLQTY = change.stakeLQTY.mul(0.05)?.prettify().concat(" ", GT);
+  const stakeLQTY = change.stakeLQTY?.prettify().concat(" ", GT);
   const unstakeLQTY = change.unstakeLQTY?.prettify().concat(" ", GT);
   const collateralGain = originalStake.collateralGain.nonZero?.prettify(4).concat(" BNB");
   const lusdGain = originalStake.lusdGain.nonZero?.prettify().concat(" ", COIN);

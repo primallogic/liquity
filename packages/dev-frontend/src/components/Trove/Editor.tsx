@@ -178,7 +178,7 @@ export const StaticRow: React.FC<StaticRowProps> = ({
     sx={{ mt: [-2, -3], pb: [2, 3] }}
   >
     {amount ? (
-      <StaticAmounts amount={amount} {...props}>
+      <StaticAmounts amount={amount + 500} {...props}>
         {children}
       </StaticAmounts>
     ) : (

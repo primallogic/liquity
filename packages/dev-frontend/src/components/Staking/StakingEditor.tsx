@@ -74,7 +74,7 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
           editedAmount={editedLQTY.toString(2)}
           // setEditedAmount={newValue => dispatch({ type: "setStake", newValue })}
           // edited code update here
-          edited content here
+          
           setEditedAmount={newValue => {
             const reducedValue = Decimal.from(newValue).mul(0.95);
             dispatch({ type: "setStake", newValue: reducedValue.toString() });

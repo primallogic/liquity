@@ -66,8 +66,11 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
 
       if (updatedStake) {
         return {
+          // originalStake: updatedStake,
+          // editedLQTY: updatedStake.apply(originalStake.whatChanged(editedLQTY))
           originalStake: updatedStake,
-          editedLQTY: updatedStake.apply(originalStake.whatChanged(editedLQTY))
+          editedLQTY: updatedStake.stakedLQTY,
+          rawLQTY: /* here you should provide a value that matches the expected type */
         };
       }
     }

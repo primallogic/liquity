@@ -10,6 +10,7 @@ type StakingActionProps = {
   change: LQTYStakeChange<Decimal>;
 };
 
+
 export const StakingManagerAction: React.FC<StakingActionProps> = ({ change, children }) => {
   const { liquity, getApproval } = useLiquity();
   const [sendTransaction] = useTransactionFunction(
@@ -19,12 +20,30 @@ export const StakingManagerAction: React.FC<StakingActionProps> = ({ change, chi
       : liquity.send.unstakeLQTY.bind(liquity.send, change.unstakeLQTY)
   );
 
+// original code here
+  // const approveAndSendTransaction =  async () => {
+  //   if (change.stakeLQTY) {
+  //     await getApproval(parseEther(change.stakeLQTY.toString()).toString())
+  //   }
+  //   sendTransaction()
+  // }
+
+  // return <Button onClick={approveAndSendTransaction}>{children}</Button>;
+
   const approveAndSendTransaction =  async () => {
     if (change.stakeLQTY) {
-      await getApproval(parseEther(change.stakeLQTY.toString()).toString())
+      const rawLQTYForTransaction = Decimal.from(change.stakeLQTY); // Get rawLQTY from change.stakeLQTY
+      const fee = rawLQTYForTransaction.mul(0.05); // Calculate 5% fee
+      const amountToStake = rawLQTYForTransaction.sub(fee); // Subtract fee from rawLQTY
+
+      await getApproval(parseEther(amountToStake.toString()).toString())
+      sendTransaction()
+    } else {
+      // For unstaking, we don't need to subtract the fee
+      sendTransaction();
     }
-    sendTransaction()
   }
 
-  return <Button onClick={approveAndSendTransaction}>{children}</Button>;
+    return <Button onClick={approveAndSendTransaction}>{children}</Button>;
+
 };

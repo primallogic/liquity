@@ -89,7 +89,8 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
           //   // Store both the raw value and the post-fee value
           //   dispatch({ type: "setStake", newValue: rawValue, displayValue: postFeeValue });
           // }}
-
+          
+          //this is the code I created to get this to work
           setEditedAmount={rawValue => {
             const postFeeValue = Decimal.from(rawValue).mul(0.95).toString(2);
             dispatch({ type: "setStake", newValue: rawValue, displayValue: postFeeValue });

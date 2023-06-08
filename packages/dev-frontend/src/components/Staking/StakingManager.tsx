@@ -19,6 +19,8 @@ import { StakingManagerAction } from "./StakingManagerAction";
 import { ActionDescription, Amount } from "../ActionDescription";
 import { ErrorDescription } from "../ErrorDescription";
 
+
+//this is the code I created to get this to work
 const init = ({ lqtyStake }: LiquityStoreState) => ({
   originalStake: lqtyStake,
   editedLQTY: lqtyStake.stakedLQTY,
@@ -64,6 +66,8 @@ const reduce = (state: StakeManagerState, action: StakeManagerAction): StakeMana
         stateChange: { lqtyStake: updatedStake }
       } = action;
 
+
+      //this is the code I created to get this to work
       if (updatedStake) {
         return {
           // originalStake: updatedStake,

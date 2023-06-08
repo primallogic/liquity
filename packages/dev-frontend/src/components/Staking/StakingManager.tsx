@@ -33,7 +33,7 @@ type StakeManagerState = {
   rawLQTY: Decimal; // new field
 };
 
-type StakeManagerAction =
+export type StakeManagerAction =
   | LiquityStoreUpdate
   | { type: "revert" }
   | { type: "setStake"; newValue: Decimalish; displayValue: Decimalish };

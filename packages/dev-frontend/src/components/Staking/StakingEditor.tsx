@@ -11,6 +11,7 @@ import { EditableRow, StaticRow } from "../Trove/Editor";
 import { LoadingOverlay } from "../LoadingOverlay";
 
 import { useStakingView } from "./context/StakingViewContext";
+import { StakeManagerAction } from "./StakingManager";
 
 const select = ({ lqtyBalance, totalStakedLQTY }: LiquityStoreState) => ({
   lqtyBalance,
@@ -21,7 +22,8 @@ type StakingEditorProps = {
   title: string;
   originalStake: LQTYStake;
   editedLQTY: Decimal;
-  dispatch: (action: { type: "setStake"; newValue: Decimalish } | { type: "revert" }) => void;
+  // dispatch: (action: { type: "setStake"; newValue: Decimalish } | { type: "revert" }) => void;
+  dispatch: (action: StakeManagerAction) => void;
 };
 
 export const StakingEditor: React.FC<StakingEditorProps> = ({
@@ -80,11 +82,16 @@ export const StakingEditor: React.FC<StakingEditorProps> = ({
           //   dispatch({ type: "setStake", newValue: reducedValue.toString() });
           // }}
 
-          setEditedAmount={rawValue => {
-            // Calculate the post-fee value
-            const postFeeValue = Decimal.from(rawValue).mul(0.95).toString(2);
+          // setEditedAmount={rawValue => {
+          //   // Calculate the post-fee value
+          //   const postFeeValue = Decimal.from(rawValue).mul(0.95).toString(2);
             
-            // Store both the raw value and the post-fee value
+          //   // Store both the raw value and the post-fee value
+          //   dispatch({ type: "setStake", newValue: rawValue, displayValue: postFeeValue });
+          // }}
+
+          setEditedAmount={rawValue => {
+            const postFeeValue = Decimal.from(rawValue).mul(0.95).toString(2);
             dispatch({ type: "setStake", newValue: rawValue, displayValue: postFeeValue });
           }}
           
